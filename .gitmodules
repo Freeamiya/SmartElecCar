@@ -1,0 +1,6 @@
+[submodule "STC32G12K128_Library"]
+	path = STC32G12K128_Library
+	url = git@gitee.com:seekfree/STC32G12K128_Library.git
+[submodule "elec_car_STC32G"]
+	path = elec_car_STC32G
+	url = git@github.com:geniusniuniu/elec_car_STC32G.git

@@ -1,0 +1,61 @@
+# Keil specific files
+*.axf
+*.bak
+*.dep
+*.d
+*.hex
+*.htm
+*.lnp
+*.lst
+*.map
+*.plg
+*.uvguix.*
+*.uvopt.*
+*.uvproj.*
+*.uvprojx.*
+*.uvoptx.*
+
+# Object files
+*.o
+*.obj
+
+# Backup files
+*~
+*.swp
+
+# Output directories
+/Objects/
+/Listings/
+/Listings/*
+
+# Build directories
+/elec_car_STC32G/
+/STC32G12K128_Library/
+
+# Keil auto-generated files
+*.crf
+*.lnp
+*.sct
+*.uvguix.*
+*.uvopt.*
+*.uvproj.*
+*.uvoptx.*
+*.uvprojx.*
+
+# Visual Studio Code specific files
+.vscode/
+*.code-workspace
+
+# Node.js specific files (if applicable)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
