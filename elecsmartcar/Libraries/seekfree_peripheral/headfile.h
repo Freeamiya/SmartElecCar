@@ -49,7 +49,11 @@
 #include "SEEKFREE_VIRSCO.h"
 #include "SEEKFREE_DL1B.h"
 #include "SEEKFREE_BLE6A20.h"
-
+#include "../../CODE/TOF.h"
+#include "../../CODE/motor.h"
+#include "../../CODE/Key.h"
+#include "../../CODE/ADC.h"
+#include "../../CODE/MPU6050.h"
 
 //------逐飞科技产品组件层文件
 #include "seekfree_assistant.h"

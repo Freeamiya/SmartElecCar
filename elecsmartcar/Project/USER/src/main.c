@@ -20,6 +20,11 @@
 #include "headfile.h"
 
 
+
+uint16 adc_data[3];
+
+void ADC_Init_All(void);
+
 /*
  * 系统频率，可查看board.h中的 FOSC 宏定义修改。
  * board.h文件中FOSC的值设置为0,则程序自动设置系统频率为33.1776MHZ
@@ -27,16 +32,38 @@
  * 如果需要使用P54引脚,可以在board.c文件中的board_init()函数中删除SET_P54_RESRT即可
  */
 
-
 void main()
 {
 	board_init();			// 初始化寄存器,勿删除此句代码。
-	
-	// 此处编写用户代码(例如：外设初始化代码等)
-	
+    MPU6050_DMP_Init();         // 初始化MPU6050
+
+    ADC_InitAll();          // 初始化ADC
+
+//    lcd_init();      // 初始化LCD
+//    lcd_clear(BLACK);     // 清屏
+//    lcd_showstr(0, 0, "ADC0:");
+
+    vl53l0x_init();     // 初始化VL53L0X
+
+    pit_timer_ms(TIM_4, 10);    // 定时10ms
+    ctimer_count_init(CTIM0_P34);	    //编码器1计数
+    ctimer_count_init(CTIM3_P04);	    //编码器2计数
+
+    Motor_Init();
+
+    gpio_mode(P5_3, GPIO);      //编码器方向引脚初始化
+    gpio_mode(P3_5, GPIO);
+
+    oled_init_spi();
+
+    Key_Init();
     while(1)
 	{
-		 // 此处编写需要循环执行的代码
+        vl53l0x_get_distance ();
+        oled_printf_float_spi(1,1,Speed_L,3,2);
+//      printf("distance = %d mm\r\n", vl53l0x_distance_mm);
+        printf(" %.2f ,%.2f ,%.2f ,%.2f ,%.2f, %.2f ,%.2f ",
+               Speed_L, Speed_R,ADC_proc[0], ADC_proc[2], ADC_proc[3],Pitch, Roll);
+
     }
 }
-

@@ -59,3 +59,4 @@ logs/
 # OS generated files
 .DS_Store
 Thumbs.db
+/elecsmartcar/Project/MDK/Out_File/

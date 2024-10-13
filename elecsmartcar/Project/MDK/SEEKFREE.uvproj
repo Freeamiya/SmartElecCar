@@ -706,6 +706,66 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>CODE</GroupName>
+          <Files>
+            <File>
+              <FileName>Key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\Key.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>TOF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\TOF.c</FilePath>
+            </File>
+            <File>
+              <FileName>Key.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\Key.h</FilePath>
+            </File>
+            <File>
+              <FileName>motor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\readme.txt</FilePath>
+            </File>
+            <File>
+              <FileName>TOF.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\TOF.h</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\ADC.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\ADC.h</FilePath>
+            </File>
+            <File>
+              <FileName>MPU6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\MPU6050.c</FilePath>
+            </File>
+            <File>
+              <FileName>MPU6050.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\MPU6050.h</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>
