@@ -54,7 +54,9 @@
 #include "../../CODE/Key.h"
 #include "../../CODE/ADC.h"
 #include "../../CODE/MPU6050.h"
-
+#include "../../CODE/INIT.h"
+#include "../../CODE/Buzzer.h"
+#include "../../CODE/PID.h"
 //------逐飞科技产品组件层文件
 #include "seekfree_assistant.h"
 

@@ -1,13 +1,7 @@
 #include "zf_tim.h"
-#include "isr.h"
-#include <string.h>
-#include <stdio.h>
 #include "common.h"
 #include "Motor.h"
 #include "ZF_PWM.h"
-#include "zf_gpio.h"
-//#include "PID.h"
-#include <STC32Gxx.H>
 
 volatile float Speed_L,Speed_R;
 
@@ -73,44 +67,43 @@ float Right_SetSpeed(float speed)
 	else 
 		Special_NumR = 0;
 	if(Special_NumR >= 10)   		//出现异常
-	{
-		pwm_duty(PWMA_CH3P_P64, 0);
-		pwm_duty(PWMA_CH4P_P66, 0);
-		return 0;
-	}
-    else
-	{
-		if(speed >= SPEED_MAX)			speed = SPEED_MAX; 
-		else if(speed <= -SPEED_MAX)	speed = -SPEED_MAX;
-		if(speed >= 0)
-		{
-			pwm_duty(PWMA_CH3P_P64, (int)speed);
-			pwm_duty(PWMA_CH4P_P66, 0);
-		} 
-		else if(speed < 0)
-		{
-			pwm_duty(PWMA_CH3P_P64, 0);
-			pwm_duty(PWMA_CH4P_P66, -(int)speed);
-		} 
-		return speed;
-	}
+    {
+        pwm_duty(PWMA_CH3P_P64, 0);
+        pwm_duty(PWMA_CH4P_P66, 0);
+        return 0;
+    }else
+    {
+        if(speed >= SPEED_MAX)			speed = SPEED_MAX;
+        else if(speed <= -SPEED_MAX)	speed = -SPEED_MAX;
+        if(speed >= 0)
+        {
+            pwm_duty(PWMA_CH3P_P64, (int)speed);
+            pwm_duty(PWMA_CH4P_P66, 0);
+        }
+        else if(speed < 0)
+        {
+            pwm_duty(PWMA_CH3P_P64, 0);
+            pwm_duty(PWMA_CH4P_P66, -(int)speed);
+        }
+        return speed;
+    }
 }
 
  void Get_Speed(void)	//获取速度
 {
 	static float Speed_L_Last;
 	static float Speed_R_Last;
-	if(P53 == 0)  		 Speed_L = ctimer_count_read(CTIM3_P04);	////左轮方向读取数值
-	else  				{Speed_L = ctimer_count_read(CTIM3_P04); Speed_L = -Speed_L;}
+	if(P53 == 0)  		 Speed_L = (float)ctimer_count_read(CTIM3_P04);	////左轮方向读取数值
+	else  				{Speed_L = (float)ctimer_count_read(CTIM3_P04); Speed_L = -Speed_L;}
 	ctimer_count_clean(CTIM3_P04);									//清除计数值，开始下一轮计数
 
 	
-	if(P35 == 1)		 Speed_R = ctimer_count_read(CTIM0_P34);		//右轮方向读取数值
-	else  				{Speed_R = ctimer_count_read(CTIM0_P34); Speed_R = -Speed_R;}
+	if(P35 == 1)		 Speed_R = (float)ctimer_count_read(CTIM0_P34);		//右轮方向读取数值
+	else  				{Speed_R = (float)ctimer_count_read(CTIM0_P34); Speed_R = -Speed_R;}
 	ctimer_count_clean(CTIM0_P34);									//清除计数值，开始下一轮计数
 	
-	Speed_L = Speed_L_Last*0.7 + Speed_L*0.3;
-	Speed_R = Speed_R_Last*0.7 + Speed_R*0.3;
+	Speed_L = Speed_L_Last*0.7f + Speed_L*0.3f;
+	Speed_R = Speed_R_Last*0.7f + Speed_R*0.3f;
 	Speed_L_Last = Speed_L;
 	Speed_R_Last = Speed_R;
 	

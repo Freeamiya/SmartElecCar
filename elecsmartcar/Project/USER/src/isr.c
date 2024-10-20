@@ -154,9 +154,7 @@ void TM4_Isr() interrupt 20
     //MPU_Get_Gyroscope(&gx, &gy, &gz);    //读取角速度
     Left_SetSpeed(2000);	//左轮速度
     Right_SetSpeed(2000);	//右轮速度
-//    printf("SPEEDL = %.2f ,SPEEDR =%.2f \r\n", Speed_L, Speed_R);
-//    printf("ADC0 = %.2f ,ADC1 = %.2f ,ADC2 = %.2f \r\n", ADC_proc[0], ADC_proc[2], ADC_proc[3]);
-//    printf("pitch = %.2f ,roll = %.2f \r\n", Pitch, Roll);
+
 }
 
 

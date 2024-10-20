@@ -16,15 +16,7 @@
  * @Taobao   		https://seekfree.taobao.com/
  * @date       		2020-12-18
  ********************************************************************************************************************/
-
 #include "headfile.h"
-
-
-
-uint16 adc_data[3];
-
-void ADC_Init_All(void);
-
 /*
  * 系统频率，可查看board.h中的 FOSC 宏定义修改。
  * board.h文件中FOSC的值设置为0,则程序自动设置系统频率为33.1776MHZ
@@ -34,36 +26,19 @@ void ADC_Init_All(void);
 
 void main()
 {
-	board_init();			// 初始化寄存器,勿删除此句代码。
-    MPU6050_DMP_Init();         // 初始化MPU6050
-
-    ADC_InitAll();          // 初始化ADC
-
-//    lcd_init();      // 初始化LCD
-//    lcd_clear(BLACK);     // 清屏
-//    lcd_showstr(0, 0, "ADC0:");
-
-    vl53l0x_init();     // 初始化VL53L0X
-
-    pit_timer_ms(TIM_4, 10);    // 定时10ms
-    ctimer_count_init(CTIM0_P34);	    //编码器1计数
-    ctimer_count_init(CTIM3_P04);	    //编码器2计数
-
-    Motor_Init();
-
-    gpio_mode(P5_3, GPIO);      //编码器方向引脚初始化
-    gpio_mode(P3_5, GPIO);
-
-    oled_init_spi();
-
-    Key_Init();
+    System_Init();
     while(1)
 	{
         vl53l0x_get_distance ();
-        oled_printf_float_spi(1,1,Speed_L,3,2);
-//      printf("distance = %d mm\r\n", vl53l0x_distance_mm);
-        printf(" %.2f ,%.2f ,%.2f ,%.2f ,%.2f, %.2f ,%.2f ",
-               Speed_L, Speed_R,ADC_proc[0], ADC_proc[2], ADC_proc[3],Pitch, Roll);
-
+        oled_printf_float_spi(1 ,1,Speed_L,3,2);
+        oled_printf_float_spi(1,3,Speed_R,3,2);
+        oled_printf_float_spi(1,5,ADC_proc[0],3,2);
+        oled_printf_float_spi(1,7,ADC_proc[2],3,2);
+        oled_printf_float_spi(64,1,ADC_proc[3],3,2);
+        oled_printf_float_spi(64,3,Pitch,3,2);
+        oled_printf_float_spi(64,5,Roll,3,2);
+        oled_uint16_spi(64,7,vl53l0x_distance_mm);
+		printf(":%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
+               vl53l0x_distance_mm,Speed_L, Speed_R,ADC_proc[0], ADC_proc[2], ADC_proc[3],Pitch, Roll);
     }
 }

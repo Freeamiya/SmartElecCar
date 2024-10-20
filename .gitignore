@@ -60,3 +60,4 @@ logs/
 .DS_Store
 Thumbs.db
 /elecsmartcar/Project/MDK/Out_File/
+elecsmartcar/Project/CODE/.idea/
