@@ -147,14 +147,7 @@ void TM3_Isr() interrupt 19
 void TM4_Isr() interrupt 20
 {
 	TIM4_CLEAR_FLAG; //清除中断标志
-	//ccd_collect();	 //CCD采集数据
-    Get_Speed();            //获取车速
-    ADC_GetValue();			//获取电感值
-    MPU6050_Refresh_DMP();                //读取角度值
-    //MPU_Get_Gyroscope(&gx, &gy, &gz);    //读取角速度
-    Left_SetSpeed(2000);	//左轮速度
-    Right_SetSpeed(2000);	//右轮速度
-
+    Control_Speed();        //速度控制
 }
 
 

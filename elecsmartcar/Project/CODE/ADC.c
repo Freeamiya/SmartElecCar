@@ -1,11 +1,12 @@
-#include "isr.h"
-#include <string.h>
-#include <stdio.h>
 #include "common.h"
 #include "zf_adc.h"
-#include "Motor.h"
+#include "ADC.h"
+#include "Flag.h"
 
-float ADC_Array_Original[5][3];
+uint16 ADC_Array_Original[5][3];
+float Diff,Plus;
+float Ratio = 0;
+float sum_L,sum_R;
 float ADC_proc[5];
 
 void ADC_InitAll(void)
@@ -40,7 +41,7 @@ void ADC_GetValue(void)
 		temp = 0;
 		for(j=0;j<3;j++)
 		{
-			temp += ADC_Array_Original[i][j];
+			temp += (float)ADC_Array_Original[i][j];
 		}
 		ADC_proc[i] = temp/3;
 		//对电感值限幅
@@ -50,4 +51,63 @@ void ADC_GetValue(void)
 		ADC_proc[i] = 100*(ADC_proc[i]/200);	
 
 	}
+}
+void Get_Ratio(void)
+{
+    static float sum_01;
+    static float sum_34;
+    static float sum;
+
+    sum_L = sqrtf_custom(ADC_proc[0]*ADC_proc[0]+ADC_proc[1]*ADC_proc[1]);
+    sum_R = sqrtf_custom(ADC_proc[4]*ADC_proc[4]+ADC_proc[3]*ADC_proc[3]);
+    Diff  = sum_L - sum_R;
+    Plus  = sum_L + sum_R;
+
+    sum_01= ADC_proc[0] + ADC_proc[1];
+    sum_34= ADC_proc[3] + ADC_proc[4];
+    sum   = sum_01 + sum_34;
+
+    if(sum > EDGE_PROTECT)
+    {
+        Ratio = Diff/Plus;	//如果小于EDGE_PROTECT//视作丢线，下次偏差值
+        Flags.Flag_Out_L = 0;		//在上次基础上再次加（减）
+        Flags.Flag_Out_R = 0;
+    }
+//    else
+//    {
+//        if(ADC_proc[0] + ADC_proc[4] < 4)
+//            Flag_Stop = 1;                      //在避障阶段和环岛阶段以及上一次丢线未寻回前不做判断
+//        else if(Barrier_Executed == 1 && Circle_Flag1 == 0 && Circle_Delay2 == 0 && Edge_Delay == 0)
+//        {
+//            Edge_Delay = 10;	//50ms
+//            if(sum_01 >= sum_34 && Flag_Out_R == 0)
+//            {
+//                //x10_ms = 10;
+//                Flag_Out_L = 1;
+//            }
+//            else if(sum_01 < sum_34 && Flag_Out_L == 0)
+//            {
+//                //x10_ms = 10;
+//                Flag_Out_R = 1;
+//            }
+//        }
+//    }
+}
+float sqrtf_custom(float x) {
+	float guess = x / 2.0f; // 初始猜测值
+    float epsilon = 0.001f; // 精度
+	
+    if (x < 0) {
+        // 对于负数，返回一个特殊值或处理错误
+        return -1;
+    }
+    if (x == 0) {
+        return 0; // 0 的平方根是 0
+    }
+    while ((guess * guess - x) > epsilon || (x - guess * guess) > epsilon) 
+	{
+        guess = (guess + x / guess) / 2.0f; // 更新猜测值
+    }
+
+    return guess;
 }

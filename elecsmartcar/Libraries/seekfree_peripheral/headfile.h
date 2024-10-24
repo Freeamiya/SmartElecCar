@@ -57,6 +57,9 @@
 #include "../../CODE/INIT.h"
 #include "../../CODE/Buzzer.h"
 #include "../../CODE/PID.h"
+#include "../../CODE/Control.h"
+#include "../../CODE/Flag.h"
+
 //------逐飞科技产品组件层文件
 #include "seekfree_assistant.h"
 

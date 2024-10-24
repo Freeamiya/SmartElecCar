@@ -764,6 +764,56 @@
               <FileType>5</FileType>
               <FilePath>..\CODE\MPU6050.h</FilePath>
             </File>
+            <File>
+              <FileName>Buzzer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\Buzzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>Control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\Control.c</FilePath>
+            </File>
+            <File>
+              <FileName>Flag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\Flag.c</FilePath>
+            </File>
+            <File>
+              <FileName>INIT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\INIT.c</FilePath>
+            </File>
+            <File>
+              <FileName>PID.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\PID.c</FilePath>
+            </File>
+            <File>
+              <FileName>Buzzer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\Buzzer.h</FilePath>
+            </File>
+            <File>
+              <FileName>Control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\Control.h</FilePath>
+            </File>
+            <File>
+              <FileName>Flag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\Flag.h</FilePath>
+            </File>
+            <File>
+              <FileName>INIT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\INIT.h</FilePath>
+            </File>
+            <File>
+              <FileName>PID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CODE\PID.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

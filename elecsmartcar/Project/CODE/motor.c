@@ -2,8 +2,10 @@
 #include "common.h"
 #include "Motor.h"
 #include "ZF_PWM.h"
+#include "ADC.h"
+#include "Control.h"
 
-volatile float Speed_L,Speed_R;
+volatile float Speed_L=0,Speed_R=0;
 
 void Limit_Out(float *Output,float Limit_Min,float Limit_Max)
 {
@@ -47,7 +49,7 @@ float Left_SetSpeed(float speed)
 		else if(speed <= -SPEED_MAX)	speed = -SPEED_MAX;
 		if(speed >= 0)
 		{
-			pwm_duty(PWMA_CH2P_P62, (int)speed);
+			pwm_duty(PWMA_CH2P_P62, (uint32)speed);
 			pwm_duty(PWMA_CH1P_P60, 0);
 		} 
 		else if(speed < 0)
@@ -77,7 +79,7 @@ float Right_SetSpeed(float speed)
         else if(speed <= -SPEED_MAX)	speed = -SPEED_MAX;
         if(speed >= 0)
         {
-            pwm_duty(PWMA_CH3P_P64, (int)speed);
+            pwm_duty(PWMA_CH3P_P64, (uint32)speed);
             pwm_duty(PWMA_CH4P_P66, 0);
         }
         else if(speed < 0)
@@ -109,6 +111,17 @@ float Right_SetSpeed(float speed)
 	
 }
 
+void Motor_Change_Speed(void)
+{
+    if(Ratio >= -0.15 && Ratio <= 0.15) //Ö±Ïß
+    {
+        Exp_Speed = NORMAL_SPEED;
+    }
+    else
+    {
+        Exp_Speed = NORMAL_SPEED-40-(Num2Abs(Ratio)/0.1)*8;
+    }
+}
 
 void Motor_Test(float Speed)
 {

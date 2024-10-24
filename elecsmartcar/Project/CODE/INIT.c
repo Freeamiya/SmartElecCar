@@ -45,4 +45,6 @@ void System_Init(void)
     PID_Init(&Turn_PID , 0,0, 0, 0 ,0, 0);
     PID_Incremental_Init(&Left_Wheel ,0,0,0,0,0,0);//48
     PID_Incremental_Init(&Right_Wheel,0,0,0,0,0,0);//48
+
+    Flags_Init();
 }

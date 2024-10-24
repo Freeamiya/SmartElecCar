@@ -20,5 +20,6 @@ float Right_SetSpeed(float speed);
 float Left_SetSpeed(float speed);
 
 void Get_Speed(void);	//获取速度
+void Motor_Change_Speed(void);	//改变速度
 void Motor_Test(float Speed);  //用来测试电机接线
 #endif
