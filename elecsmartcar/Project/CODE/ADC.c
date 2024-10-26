@@ -54,9 +54,9 @@ void ADC_GetValue(void)
 }
 void Get_Ratio(void)
 {
-    static float sum_01;
-    static float sum_34;
-    static float sum;
+    float sum_01;
+    float sum_34;
+    float sum;
 
     sum_L = sqrtf_custom(ADC_proc[0]*ADC_proc[0]+ADC_proc[1]*ADC_proc[1]);
     sum_R = sqrtf_custom(ADC_proc[4]*ADC_proc[4]+ADC_proc[3]*ADC_proc[3]);

@@ -38,7 +38,7 @@ void main()
         oled_printf_float_spi(64,3,Pitch,3,2);
         oled_printf_float_spi(64,5,Roll,3,2);
         oled_uint16_spi(64,7,vl53l0x_distance_mm);
-		printf(":%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,\r\n",
-               Act_PwmL,Act_PwmR,Exp_Speed_L,Exp_Speed_R,Speed_L,Speed_R);
+		printf(":%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
+               Act_PwmL,Act_PwmR,Ratio,Speed_L,Speed_R);
     }
 }

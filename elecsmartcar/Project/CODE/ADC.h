@@ -7,7 +7,6 @@ extern float ADC_proc[];
 extern float Ratio;
 
 
-
 void ADC_InitAll(void);
 void ADC_GetValue(void);
 void Get_Ratio(void);
