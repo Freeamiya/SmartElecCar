@@ -4,12 +4,17 @@
 
 #include "Flag.h"
 #include "headfile.h"
-
 Flag_t Flags;
-
-void Flags_Init(void)
+Parameter_t Params;
+void Flags_Init(Flag_t *flags,uint8 Flag_Out_L,uint8 Flag_Out_R,uint8 Flag_Stop)
 {
-    Flags.Flag_Out_L = 0;
-    Flags.Flag_Out_R = 0;
-    Flags.Flag_Stop = 0;
+    flags->Flag_Out_L = Flag_Out_L;
+    flags->Flag_Out_R = Flag_Out_R;
+    flags->Flag_Stop = Flag_Stop;
+}
+void Param_Init(Parameter_t *params,float a,float b,float c)
+{
+    params->A = a;
+    params->B = b;
+    params->C = c;
 }

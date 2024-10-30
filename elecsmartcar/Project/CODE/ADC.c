@@ -2,13 +2,14 @@
 #include "zf_adc.h"
 #include "ADC.h"
 #include "Flag.h"
+#include "motor.h"
 
 uint16 ADC_Array_Original[5][3];
 float Diff,Plus;
+float DiffM,PlusM;
 float Ratio = 0;
 float sum_L,sum_R;
 float ADC_proc[5];
-
 void ADC_InitAll(void)
 {
 	adc_init(ADC_P10, ADC_SYSclk_DIV_2);
@@ -58,10 +59,10 @@ void Get_Ratio(void)
     float sum_34;
     float sum;
 
-    sum_L = sqrtf_custom(ADC_proc[0]*ADC_proc[0]+ADC_proc[1]*ADC_proc[1]);
-    sum_R = sqrtf_custom(ADC_proc[4]*ADC_proc[4]+ADC_proc[3]*ADC_proc[3]);
-    Diff  = sum_L - sum_R;
-    Plus  = sum_L + sum_R;
+    Diff = ADC_proc[0] - ADC_proc[4];
+    Plus = ADC_proc[0] + ADC_proc[4];
+    DiffM= ADC_proc[1] - ADC_proc[3];
+    PlusM= ADC_proc[1] + ADC_proc[3];
 
     sum_01= ADC_proc[0] + ADC_proc[1];
     sum_34= ADC_proc[3] + ADC_proc[4];
@@ -69,7 +70,7 @@ void Get_Ratio(void)
 
     if(sum > EDGE_PROTECT)
     {
-        Ratio = Diff/Plus;	//如果小于EDGE_PROTECT//视作丢线，下次偏差值
+        Ratio = (Params.A*Diff+Params.B*DiffM)/(Params.A*Plus+Params.B*PlusM);	//如果小于EDGE_PROTECT//视作丢线，下次偏差值
         Flags.Flag_Out_L = 0;		//在上次基础上再次加（减）
         Flags.Flag_Out_R = 0;
     }

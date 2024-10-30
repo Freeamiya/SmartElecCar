@@ -42,9 +42,10 @@ void System_Init(void)
 ////初始化所有AD引脚
     ADC_InitAll();
 
-    PID_Init(&Turn_PID , 0,0, 0, 0 ,0, 0);
-    PID_Incremental_Init(&Left_Wheel ,0,0,0,0,0,0);//48
-    PID_Incremental_Init(&Right_Wheel,0,0,0,0,0,0);//48
+    PID_Init(&Turn_PID , 0,0, 0, 0 ,8000, 0);
+    PID_Incremental_Init(&Left_Wheel ,40,1.5f,0,9000,5000,1);//48
+    PID_Incremental_Init(&Right_Wheel,40,1.5f,0,9000,5000,1);//48
 
-    Flags_Init();
+    Flags_Init(&Flags,0,0,0);
+    Param_Init(&Params,1,0.5f,1);
 }
