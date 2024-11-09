@@ -119,7 +119,7 @@ void Motor_Change_Speed(void)
     }
     else
     {
-        Exp_Speed = NORMAL_SPEED-40-(Num2Abs(Ratio)/0.1)*8;
+        Exp_Speed = NORMAL_SPEED-30-Num2Abs(Ratio)*90;
     }
 }
 

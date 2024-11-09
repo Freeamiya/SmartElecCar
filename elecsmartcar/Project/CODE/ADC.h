@@ -5,12 +5,11 @@
 
 extern float ADC_proc[];
 extern float Ratio;
-
+extern float Last_Ratio;
 
 
 void ADC_InitAll(void);
 void ADC_GetValue(void);
 void Get_Ratio(void);
-
-float sqrtf_custom(float x);
+float Voltage_Detect(void);
 #endif

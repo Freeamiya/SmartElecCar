@@ -3,6 +3,7 @@
 #include "ADC.h"
 #include "Flag.h"
 #include "motor.h"
+#include "Control.h"
 
 uint16 ADC_Array_Original[5][3];
 float Diff,Plus;
@@ -10,6 +11,8 @@ float DiffM,PlusM;
 float Ratio = 0;
 float sum_L,sum_R;
 float ADC_proc[5];
+float Last_Ratio;
+float Voltage;
 void ADC_InitAll(void)
 {
 	adc_init(ADC_P10, ADC_SYSclk_DIV_2);
@@ -49,8 +52,7 @@ void ADC_GetValue(void)
 		if(ADC_proc[i] >= 200)			ADC_proc[i] = 200;	
 		else if(ADC_proc[i] <= 2)		ADC_proc[i] = 2;
 		//归一化,将电感值限制在0~100之间
-		ADC_proc[i] = 100*(ADC_proc[i]/200);	
-
+		ADC_proc[i] = 100*(ADC_proc[i]/200);
 	}
 }
 void Get_Ratio(void)
@@ -58,6 +60,7 @@ void Get_Ratio(void)
     float sum_01;
     float sum_34;
     float sum;
+
 
     Diff = ADC_proc[0] - ADC_proc[4];
     Plus = ADC_proc[0] + ADC_proc[4];
@@ -71,44 +74,26 @@ void Get_Ratio(void)
     if(sum > EDGE_PROTECT)
     {
         Ratio = (Params.A*Diff+Params.B*DiffM)/(Params.A*Plus+Params.B*PlusM);	//如果小于EDGE_PROTECT//视作丢线，下次偏差值
-        Flags.Flag_Out_L = 0;		//在上次基础上再次加（减）
-        Flags.Flag_Out_R = 0;
-    }
-//    else
-//    {
-//        if(ADC_proc[0] + ADC_proc[4] < 4)
-//            Flag_Stop = 1;                      //在避障阶段和环岛阶段以及上一次丢线未寻回前不做判断
-//        else if(Barrier_Executed == 1 && Circle_Flag1 == 0 && Circle_Delay2 == 0 && Edge_Delay == 0)
-//        {
-//            Edge_Delay = 10;	//50ms
-//            if(sum_01 >= sum_34 && Flag_Out_R == 0)
-//            {
-//                //x10_ms = 10;
-//                Flag_Out_L = 1;
-//            }
-//            else if(sum_01 < sum_34 && Flag_Out_L == 0)
-//            {
-//                //x10_ms = 10;
-//                Flag_Out_R = 1;
-//            }
-//        }
-//    }
-}
-float sqrtf_custom(float x) {
-	float guess = x / 2.0f; // 初始猜测值
-    float epsilon = 0.001f; // 精度
-	
-    if (x < 0) {
-        // 对于负数，返回一个特殊值或处理错误
-        return -1;
-    }
-    if (x == 0) {
-        return 0; // 0 的平方根是 0
-    }
-    while ((guess * guess - x) > epsilon || (x - guess * guess) > epsilon) 
-	{
-        guess = (guess + x / guess) / 2.0f; // 更新猜测值
-    }
+//        Flags.Flag_Out_L = 0;		//在上次基础上再次加（减）
+//        Flags.Flag_Out_R = 0;
+        Last_Ratio = Ratio;
 
-    return guess;
+    }
+    else {
+        if (Last_Ratio>0 ) {
+            Exp_Speed = 130;
+            Ratio = 0.24+(Speed_L/110)*0.15;
+        } else if (Last_Ratio<0 ) {
+            Exp_Speed = 130;
+            Ratio = -0.24-(Speed_L/110)*0.15;
+        }
+    }
+}
+
+float Voltage_Detect(void)
+{
+    uint16 ADC_Value;
+    ADC_Value = adc_once(ADC_P15, ADC_8BIT);
+    Voltage = (float)(ADC_Value*2.2*4/255);
+    return Voltage;
 }

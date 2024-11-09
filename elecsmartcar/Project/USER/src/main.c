@@ -29,15 +29,16 @@ void main()
     System_Init();
     while(1)
 	{
-        vl53l0x_get_distance ();
-        oled_printf_float_spi(1 ,1,Speed_L,3,2);
-        oled_printf_float_spi(1,3,Speed_R,3,2);
-        oled_printf_float_spi(1,5,ADC_proc[0],3,2);
-        oled_printf_float_spi(1,7,ADC_proc[2],3,2);
-        oled_printf_float_spi(64,1,ADC_proc[3],3,2);
-        oled_printf_float_spi(64,3,Pitch,3,2);
-        oled_printf_float_spi(64,5,Roll,3,2);
-        oled_uint16_spi(64,7,vl53l0x_distance_mm);
-		printf(":%.2f,%.2f,%.2f,%.2f\r\n",Speed_L,Speed_R,Exp_Speed_R,Ratio);
+//        vl53l0x_get_distance ();
+//        oled_printf_float_spi(1 ,1,Speed_L,3,2);
+//        oled_printf_float_spi(1,3,Speed_R,3,2);
+//        oled_printf_float_spi(1,5,ADC_proc[0],3,2);
+//        oled_printf_float_spi(1,7,ADC_proc[2],3,2);
+//        oled_printf_float_spi(64,1,ADC_proc[3],3,2);
+//        oled_printf_float_spi(64,3,Pitch,3,2);
+//        oled_printf_float_spi(64,5,Roll,3,2);
+//        oled_uint16_spi(64,7,vl53l0x_distance_mm);
+		printf(":%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
+		Ratio,Speed_L,Speed_R,Exp_Speed_L,Exp_Speed_R,Voltage_Detect());
     }
 }

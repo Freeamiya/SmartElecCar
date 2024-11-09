@@ -18,7 +18,7 @@ void System_Init(void)
 //    lcd_showstr(0, 0, "ADC0:");
 
 ////测距模块初始化
-    vl53l0x_init();
+//    vl53l0x_init();
 
 ////OLED初始化
     oled_init_spi();
@@ -42,10 +42,10 @@ void System_Init(void)
 ////初始化所有AD引脚
     ADC_InitAll();
 
-    PID_Init(&Turn_PID , 0,0, 0, 0 ,8000, 0);
-    PID_Incremental_Init(&Left_Wheel ,40,1.5f,0,9000,5000,1);//48
-    PID_Incremental_Init(&Right_Wheel,40,1.5f,0,9000,5000,1);//48
+    PID_Init(&Turn_PID , 0.4,70, 0 ,8000, 0);//0.5 30
+    PID_Incremental_Init(&Left_Wheel ,50,4,4,7000,1);//48
+    PID_Incremental_Init(&Right_Wheel,50,4,4,7000,1);//48
 
     Flags_Init(&Flags,0,0,0);
-    Param_Init(&Params,1,0.5f,1);
+    Param_Init(&Params,0.5,1,1);
 }

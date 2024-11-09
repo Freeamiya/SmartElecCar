@@ -27,7 +27,7 @@ typedef struct
 extern PID_InitTypeDef Turn_PID;
 
 //PID≥ı ºªØ
-void PID_Init(PID_InitTypeDef *PID_Struct, float Kpa,float Kpb, float Ki, float Kd,float Out_Limit, float Integral_Limit);
+void PID_Init(PID_InitTypeDef *PID_Struct, float Kpa,float Kpb, float Kd,float Out_Limit, float Integral_Limit);
 //PIDº∆À„
 void PID_Calculate(PID_InitTypeDef *PID_Struct, float Exp_Val, float Act_Val);
 
@@ -62,7 +62,7 @@ extern PID_Incremental Right_Wheel;
 
 
 
-void PID_Incremental_Init(PID_Incremental *pid, float Kp, float Ki, float Kd,float Out_Limit, float Integral_Limit,uint8 use_lowpass_filter);
+void PID_Incremental_Init(PID_Incremental *pid, float Kp, float Ki, float Kd,float Out_Limit,uint8 use_lowpass_filter);
 float PID_Incremental_Calc(PID_Incremental *pid, float setpoint, float input_value);
 
 #endif //INC_1_ELECCAR_PID_H

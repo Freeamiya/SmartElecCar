@@ -7,11 +7,10 @@
 #include "Motor.h"
 PID_InitTypeDef Turn_PID;
 
-void PID_Init(PID_InitTypeDef *PID_Struct, float Kpa,float Kpb, float Ki, float Kd,float Out_Limit, float Integral_Limit)		//PID初始化
+void PID_Init(PID_InitTypeDef *PID_Struct, float Kpa,float Kpb, float Kd,float Out_Limit, float Integral_Limit)		//PID初始化
 {
     PID_Struct->Kpa = Kpa;
     PID_Struct->Kpb = Kpb;
-    PID_Struct->Ki = Ki;
     PID_Struct->Kd = Kd;
 
     PID_Struct->Err = 0;
@@ -50,7 +49,7 @@ PID_Incremental Turn;
 PID_Incremental Left_Wheel;
 PID_Incremental Right_Wheel;
 
-void PID_Incremental_Init(PID_Incremental *pid, float Kp, float Ki, float Kd,float Out_Limit, float Integral_Limit,uint8 use_lowpass_filter)
+void PID_Incremental_Init(PID_Incremental *pid, float Kp, float Ki, float Kd,float Out_Limit,uint8 use_lowpass_filter)
 {
     pid->Kp = Kp;
     pid->Ki = Ki;
@@ -64,7 +63,6 @@ void PID_Incremental_Init(PID_Incremental *pid, float Kp, float Ki, float Kd,flo
     pid->out = 0;
     pid->outmax = Out_Limit;
     pid->outmin = -Out_Limit;
-    pid->Integral_Limit = Integral_Limit;
     pid->use_lowpass_filter = use_lowpass_filter;
     pid->lowpass_filter_factor = 0.3f;
 }
@@ -73,19 +71,20 @@ void PID_Incremental_Init(PID_Incremental *pid, float Kp, float Ki, float Kd,flo
 float PID_Incremental_Calc(PID_Incremental *pid, float setpoint, float input_value)
 {
     float derivative;
+    float output;
     pid->last_last_error = pid->last_error;
     pid->last_error = pid->error;
     pid->error = setpoint - input_value;
     derivative = (pid->error - 2 * pid->last_error + pid->last_last_error);
 
-    pid->P_Out += ((pid->error)-(pid->last_error))*(pid->Kp);		//比例控制部分	P_Out=KP*(err-err_last)
+    pid->P_Out = ((pid->error)-(pid->last_error))*(pid->Kp);		//比例控制部分	P_Out=KP*(err-err_last)
 
-    pid->I_Out += (pid->error)*(pid->Ki);												//积分控制部分	I_Out=KI*error
-    Limit_Out(&pid->I_Out, -pid->Integral_Limit,pid->Integral_Limit);		//积分限幅
+    pid->I_Out = (pid->error)*(pid->Ki);												//积分控制部分	I_Out=KI*error
+//    Limit_Out(&pid->I_Out, -pid->Integral_Limit,pid->Integral_Limit);		//积分限幅
 
-    pid->D_Out += derivative*(pid->Kd);		//微分控制部分	D_Out=KD*(err-2*err_last+err_prev)
-
-    pid->out = (pid->P_Out)+(pid->I_Out)+(pid->D_Out);
+    pid->D_Out = derivative*(pid->Kd);		//微分控制部分	D_Out=KD*(err-2*err_last+err_prev)
+    output = pid->P_Out + pid->I_Out + pid->D_Out;
+    pid->out += output;
 
     // Low pass filter
     if(pid->use_lowpass_filter)
